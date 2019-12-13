@@ -2,6 +2,7 @@
 	"name": "verilog-autoline",
 	"displayName": "verilog-autoline",
 	"description": "Auto lined alignment for verilog",
+	"publisher": "Seongmock",
 	"version": "0.0.1",
 	"engines": {
 		"vscode": "^1.41.0"
@@ -9,6 +10,9 @@
 	"categories": [
 		"Other"
 	],
+	"repository": {
+		"url":"https://github.com/seongmock/verilog-autoline"
+	},
 	"activationEvents": [
 		"onCommand:extension.VerilogAutoline",
         "onCommand:extension.VerilogAutoline2",
