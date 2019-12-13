@@ -10,16 +10,44 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:extension.helloWorld"
+		"onCommand:extension.VerilogAutoline",
+        "onCommand:extension.VerilogAutoline2",
+        "onCommand:extension.VimFoldAdd"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
-			{
-				"command": "extension.helloWorld",
-				"title": "Hello World"
-			}
-		]
+            {
+                "command": "extension.VerilogAutoline",
+                "title": "Verilog Autoline"
+            },
+            {
+                "command": "extension.VerilogAutoline2",
+                "title": "Verilog Autoline"
+            },
+            {
+                "command":"extension.VimFoldAdd",
+                "title":"Vim Fold Add"
+            }
+        ],
+        "keybindings": [
+            {
+                "command": "extension.VerilogAutoline",
+                "key": "ctrl+l",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "extension.VerilogAutoline2",
+                "key": "ctrl+shift+l",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "extension.VimFoldAdd",
+                "key": "ctrl+f11",
+                "when": "editorTextFocus"
+            }
+
+        ]
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
