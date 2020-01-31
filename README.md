@@ -35,6 +35,6 @@ Initial release of verilog-autoline
 
 ### 1.1.0
 
-- Emacs verilog-mode function Added
-    - verilog-auto
-    - verilog-delete-auto
+Emacs verilog-mode function Added
+- verilog-auto
+- verilog-delete-auto
