@@ -33,7 +33,7 @@ Initial Release
 
 Initial release of verilog-autoline
 
-### 1.0.1
+### 1.1.0
 
 - Emacs verilog-mode function Added
     - verilog-auto
