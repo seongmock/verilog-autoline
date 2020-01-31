@@ -6,4 +6,10 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
+## [1.0.0]
 - Initial release
+
+## [1.0.1] - 2020-01-31
+- Emacs verilog-mode function Added
+    - verilog-auto
+    - verilog-delete-auto
