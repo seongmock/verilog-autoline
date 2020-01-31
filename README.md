@@ -4,7 +4,7 @@
 
 This Extension is help to edit verilog-file
 * Make align better at 'input', 'output', 'wire', 'reg' ....
-* verliog-mode (EMACS) batch script run automatically
+* verliog-mode (EMACS) batch script run
     * verilog-auto
     * verilog-delete-auto
 
@@ -15,7 +15,7 @@ Defalut keybindings
 
 * `ctrl+l`  - Auto Line
 * `ctrl+alt+l` - Auto Line2
-* `ctrl+f11` - Make VIM folding code automatically
+* `ctrl+f11` - Make VIM folding code
 
 No Keybinding
 * verilog-auto
