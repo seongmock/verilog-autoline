@@ -3,7 +3,7 @@
     "displayName": "verilog-autoline",
     "description": "Auto lined alignment for verilog",
     "publisher": "Seongmock",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "engines": {
         "vscode": "^1.41.0"
     },
