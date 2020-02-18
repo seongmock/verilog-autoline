@@ -82,6 +82,13 @@ function parseLine(InLine: string) {
             let lvalue = InLine.replace(rvalue[0], "");
             new_line = addMarginOffset(lvalue, 1) + rvalue[0];
         }
+    } else if (InLine.match(/\)/)) {
+        let reg_rvalue = /\).*$/;
+        let rvalue = reg_rvalue.exec(InLine);
+        if(rvalue) {
+            let lvalue = InLine.replace(rvalue[0], "");
+            new_line = addMarginOffset(lvalue, 1) + rvalue[0];
+        }
     } else {
         new_line = InLine;
     }
@@ -107,6 +114,13 @@ function parseLine_2(InLine: string) {
         if (tgt) {
             Line = InLine.replace(tgt[0], "");
             new_line = addMarginOffset(Line, 1) + tgt[0];
+        }
+    } else if (InLine.match(/\(/)) {
+        let reg_rvalue = /\(.*$/;
+        let rvalue = reg_rvalue.exec(InLine);
+        if(rvalue) {
+            let lvalue = InLine.replace(rvalue[0], "");
+            new_line = addMarginOffset(lvalue, 1) + rvalue[0];
         }
     } else {
         new_line = InLine;

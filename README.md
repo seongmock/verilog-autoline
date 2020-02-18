@@ -38,3 +38,7 @@ Initial release of verilog-autoline
 Emacs verilog-mode function Added
 - verilog-auto
 - verilog-delete-auto
+
+## 1.2.0
+
+- Auto Line Case Added Shift `(` or `)`
