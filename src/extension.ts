@@ -40,7 +40,7 @@ function parseLine(InLine: string) {
     let tab = 1;
     let new_line = "";
 
-    let types = ["input", "output", "inout", "wire", "reg", "signed", "parameter", "localparam", "genvar", "integer"];
+    let types = ["input", "output", "inout", "wire", "reg", "signed", "parameter", "localparam", "genvar", "integer", "bit", "logic"];
 
     let reg_cmt = /^\s*\/\//;
     let match = reg_cmt.exec(InLine);
