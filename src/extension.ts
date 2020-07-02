@@ -172,7 +172,7 @@ function verilog_comment() {
         type = inputs[0];
         let paragraph="";
         for (var i=0; i<ln; i++) {
-            let line = "//";
+            let line = (" ".repeat(ln_st.character)) +"//";
             if ((i===0) || (i===ln-1)) {
                 for(let j=0; j<ll-2; j++){
                     line = line + type;
