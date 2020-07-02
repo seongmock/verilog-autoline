@@ -18,7 +18,8 @@
         "onCommand:extension.VerilogAutoline2",
         "onCommand:extension.VimFoldAdd",
         "onCommand:extension.VerilogAuto",
-        "onCommand:extension.VerilogDeleteAuto"
+        "onCommand:extension.VerilogDeleteAuto",
+        "onCommand:extension.VerilogCommentLine"
     ],
     "main": "./out/extension.js",
     "contributes": {
@@ -42,6 +43,10 @@
             {
                 "command": "extension.VerilogDeleteAuto",
                 "title": "Verilog-mode(EMACES): verilog-delete-auto"
+            },
+            {
+                "command": "extension.VerilogCommentLine",
+                "title": "Verilog Add Comment Line"
             }
         ],
         "keybindings": [
@@ -58,6 +63,11 @@
             {
                 "command": "extension.VimFoldAdd",
                 "key": "ctrl+f11",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "extension.VerilogCommentLine",
+                "key": "ctrl+k ctrl+/",
                 "when": "editorTextFocus"
             }
         ]

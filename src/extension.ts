@@ -85,7 +85,7 @@ function parseLine(InLine: string) {
     } else if (InLine.match(/\)/)) {
         let reg_rvalue = /\).*$/;
         let rvalue = reg_rvalue.exec(InLine);
-        if(rvalue) {
+        if (rvalue) {
             let lvalue = InLine.replace(rvalue[0], "");
             new_line = addMarginOffset(lvalue, 1) + rvalue[0];
         }
@@ -118,7 +118,7 @@ function parseLine_2(InLine: string) {
     } else if (InLine.match(/\(/)) {
         let reg_rvalue = /\(.*$/;
         let rvalue = reg_rvalue.exec(InLine);
-        if(rvalue) {
+        if (rvalue) {
             let lvalue = InLine.replace(rvalue[0], "");
             new_line = addMarginOffset(lvalue, 1) + rvalue[0];
         }
@@ -131,20 +131,60 @@ function parseLine_2(InLine: string) {
 
 function verilog_mode(mode: Number) {
     let file_path = vscode.window.activeTextEditor?.document.uri.fsPath;
-    var my_term   = vscode.window.activeTerminal;
-    if(typeof my_term === 'undefined') { my_term = vscode.window.createTerminal(); }
+    var my_term = vscode.window.activeTerminal;
+    if (typeof my_term === 'undefined') { my_term = vscode.window.createTerminal(); }
     my_term.show();
 
-    if(mode === 0) {// Verilog Auto
+    if (mode === 0) {// Verilog Auto
         let cmd = 'emacs --batch \'' + file_path + '\' -f verilog-batch-auto -f save-buffer';
         console.log(cmd);
         my_term.sendText(cmd);
     }
-    else if(mode === 1) { //verilog-delete-auto
+    else if (mode === 1) { //verilog-delete-auto
         let cmd = 'emacs --batch \'' + file_path + '\' -f verilog-batch-delete-auto -f save-buffer';
         console.log(cmd);
         my_term.sendText(cmd);
     }
+}
+
+function verilog_comment() {
+    let editor = vscode.window.activeTextEditor;
+    if (!editor) {
+        return;
+    }
+    let sel = editor.selection;
+    let ln_st = sel.start;
+    let type="=";
+    let ln=3;
+    let ll=80;
+    let options: vscode.InputBoxOptions = {
+        prompt: "Comment Type:",
+        placeHolder: "%c,%d,%d  - type(char),linenumber(num),line_length(num)",
+        value: type+"/"+ln+"/"+ll
+    };
+    vscode.window.showInputBox(options).then(value => {
+        if (!value) { return; }
+        let inputs = value.split('/');
+
+        // console.log(inputs.length)
+        if (inputs.length>2)  { ll=Number(inputs[2]); }
+        if (inputs.length>1)  { ln=Number(inputs[1]); }
+        type = inputs[0];
+        let paragraph="";
+        for (var i=0; i<ln; i++) {
+            let line = "//";
+            if ((i===0) || (i===ln-1)) {
+                for(let j=0; j<ll-2; j++){
+                    line = line + type;
+                }
+            }
+            paragraph = paragraph + line + "\n";
+        }
+        editor?.edit(builder => {
+            builder.insert(ln_st, paragraph);
+        });
+    });
+
 }
 
 // this method is called when your extension is activated
@@ -281,10 +321,13 @@ export function activate(context: vscode.ExtensionContext) {
     });
     context.subscriptions.push(vim_fold);
 
-    let vmode_auto = vscode.commands.registerCommand("extension.VerilogAuto", () => {verilog_mode(0);});
+    let vmode_auto = vscode.commands.registerCommand("extension.VerilogAuto", () => { verilog_mode(0); });
     context.subscriptions.push(vmode_auto);
-    let vmode_delete_auto = vscode.commands.registerCommand("extension.VerilogDeleteAuto", () => {verilog_mode(1);});
+    let vmode_delete_auto = vscode.commands.registerCommand("extension.VerilogDeleteAuto", () => { verilog_mode(1); });
     context.subscriptions.push(vmode_delete_auto);
+
+    let my_comment = vscode.commands.registerCommand("extension.VerilogCommentLine", () => { verilog_comment(); });
+    context.subscriptions.push(my_comment);
 }
 // this method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() { }

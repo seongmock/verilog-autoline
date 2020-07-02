@@ -7,6 +7,9 @@ This Extension is help to edit verilog-file
 * verliog-mode (EMACS) batch script run
     * verilog-auto
     * verilog-delete-auto
+* Add Comment Line (Type, Line Number, Line Length)
+    * ex) //======================================   <- "=/1/40"
+    * ex) //--------------------------------------   <- "-/1/40"
 
 
 ## Keybinings
@@ -16,6 +19,7 @@ Defalut keybindings
 * `ctrl+l`  - Auto Line
 * `ctrl+alt+l` - Auto Line2
 * `ctrl+f11` - Make VIM folding code
+* `ctrl+k ctrl+/` - Add Line comment 
 
 No Keybinding
 * verilog-auto
@@ -46,3 +50,7 @@ Emacs verilog-mode function Added
 ## 0.3.0
 
 - Add "bit" "logic"
+
+## 0.4.0
+
+- Add MultiLine Comment Divider Command

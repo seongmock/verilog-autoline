@@ -6,10 +6,24 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
-## [1.0.0]
-- Initial release
+### 0.0.0
 
-## [1.1.0] - 2020-01-31
-- Emacs verilog-mode function Added
-    - verilog-auto
-    - verilog-delete-auto
+Initial release of verilog-autoline
+
+### 0.1.0
+
+Emacs verilog-mode function Added
+- verilog-auto
+- verilog-delete-auto
+
+## 0.2.0
+
+- Auto Line Case Added Shift `(` or `)`
+
+## 0.3.0
+
+- Add "bit" "logic"
+
+## 0.4.0
+
+- Add MultiLine Comment Divider Command
