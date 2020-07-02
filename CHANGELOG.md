@@ -35,3 +35,7 @@ Emacs verilog-mode function Added
 ## 1.1.0
 
 - Bug Fix
+
+## 1.2.0
+
+- Multi Selection Support

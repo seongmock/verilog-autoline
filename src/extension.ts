@@ -154,36 +154,43 @@ function verilog_comment() {
     }
     let sel = editor.selection;
     let ln_st = sel.start;
-    let type="=";
-    let ln=3;
-    let ll=80;
+    let type = "=";
+    let ln = 3;
+    let ll = 80;
     let options: vscode.InputBoxOptions = {
         prompt: "Comment Type:",
         placeHolder: "%c,%d,%d  - type(char),linenumber(num),line_length(num)",
-        value: type+"/"+ln+"/"+ll
+        value: type + "/" + ln + "/" + ll
     };
     vscode.window.showInputBox(options).then(value => {
         if (!value) { return; }
         let inputs = value.split('/');
 
         // console.log(inputs.length)
-        if (inputs.length>2)  { ll=Number(inputs[2]); }
-        if (inputs.length>1)  { ln=Number(inputs[1]); }
+        if (inputs.length > 2) { ll = Number(inputs[2]); }
+        if (inputs.length > 1) { ln = Number(inputs[1]); }
         type = inputs[0];
-        let paragraph="";
-        for (var i=0; i<ln; i++) {
-            let line = (" ".repeat(ln_st.character)) +"//";
-            if ((i===0) || (i===ln-1)) {
-                for(let j=0; j<ll-2; j++){
+        let paragraph = "";
+        for (var i = 0; i < ln; i++) {
+            let line = (" ".repeat(ln_st.character)) + "//";
+            if ((i === 0) || (i === ln - 1)) {
+                for (let j = 0; j < ll - 2; j++) {
                     line = line + type;
                 }
             }
+            else {
+                line = line + " ";
+            }
             paragraph = paragraph + line + "\n";
         }
-        editor?.edit(builder => {
+        if (!editor) { return; }
+        editor.edit(builder => {
             let pos = new vscode.Position(ln_st.line, 0);
             builder.insert(pos, paragraph);
         });
+        let pos = new vscode.Position(ln_st.line + 1, ln_st.character + 4);
+        let newSelection = new vscode.Selection(pos, pos);
+        editor.selection = newSelection;
     });
 
 }
@@ -208,39 +215,27 @@ export function activate(context: vscode.ExtensionContext) {
 
         let range = 1;
         let ln_st = 0;
-        let sel = editor.selection;
-        var paragraph = "";
-        if (sel.isEmpty) {
-            range = 1;
-            ln_st = editor.selection.active.line;
-        } else {
-            range = sel.end.line - sel.start.line + 1;
-            ln_st = sel.start.line;
-        }
+        let sels = editor.selections;
 
-        for (var i = 0; i < range; i++) {
-            let line = editor.document.lineAt(ln_st + i);
-            let line_text = line.text;
-            let new_line = parseLine(line_text);
-            if (new_line !== null) {
-                if (i !== 0) {
-                    paragraph = paragraph + "\n";
+        editor.edit(
+            builder => {
+                for (let sel of sels) {
+                    for (let i=sel.start.line; i<=sel.end.line; i++)
+                    {
+                        if (!editor) {return;}
+                        let line = editor.document.lineAt(i);
+                        let new_line = parseLine(line.text);
+                        let line_range = new vscode.Range(line.range.start, line.range.end);
+                        builder.replace(line_range, new_line);
+                    }
                 }
-                paragraph = paragraph + new_line;
-                // editor.edit(builder => {
-                //     builder.replace(line.range, new_line);
-                // });
             }
-        }
-        var last_line = editor.document.lineAt(sel.end.line);
-        var text_Range = new vscode.Range(ln_st, 0, sel.end.line, last_line.range.end.character);
-        editor.edit(builder => {
-            builder.replace(text_Range, paragraph);
-        });
-        var position = editor.selection.active;
-        var newPosition = position.with(position.line, 0);
-        var newSelection = new vscode.Selection(newPosition, newPosition);
-        editor.selection = newSelection;
+        );
+
+        let position = sels[0].active;
+        let newPosition = position.with(position.line, 0);
+        let newSelection = new vscode.Selection(newPosition, newPosition);
+        sels[0] = newSelection;
     });
 
     context.subscriptions.push(disposable);
@@ -255,41 +250,28 @@ export function activate(context: vscode.ExtensionContext) {
 
         let range = 1;
         let ln_st = 0;
-        let sel = editor.selection;
-        var paragraph = "";
-        if (sel.isEmpty) {
-            range = 1;
-            ln_st = editor.selection.active.line;
-        } else {
-            range = sel.end.line - sel.start.line + 1;
-            ln_st = sel.start.line;
-        }
-
-        for (var i = 0; i < range; i++) {
-            let line = editor.document.lineAt(ln_st + i);
-            let line_text = line.text;
-            let new_line = parseLine_2(line_text);
-            if (new_line !== null) {
-                if (i !== 0) {
-                    paragraph = paragraph + "\n";
+        let sels = editor.selections;
+        editor.edit(
+            builder => {
+                for (let sel of sels) {
+                    for (let i=sel.start.line; i<=sel.end.line; i++)
+                    {
+                        if (!editor) {return;}
+                        let line = editor.document.lineAt(i);
+                        let new_line = parseLine_2(line.text);
+                        let line_range = new vscode.Range(line.range.start, line.range.end);
+                        builder.replace(line_range, new_line);
+                    }
                 }
-                paragraph = paragraph + new_line;
-                // editor.edit(builder => {
-                //     builder.replace(line.range, new_line);
-                // });
             }
-        }
-        var last_line = editor.document.lineAt(sel.end.line);
-        var text_Range = new vscode.Range(ln_st, 0, sel.end.line, last_line.range.end.character);
-        editor.edit(builder => {
-            builder.replace(text_Range, paragraph);
-        });
-
-        var position = editor.selection.active;
-        var newPosition = position.with(position.line, 0);
-        var newSelection = new vscode.Selection(newPosition, newPosition);
-        editor.selection = newSelection;
+        );
+        
+        let position = sels[0].active;
+        let newPosition = position.with(position.line, 0);
+        let newSelection = new vscode.Selection(newPosition, newPosition);
+        sels[0] = newSelection;
     });
+    
 
     context.subscriptions.push(disposable2);
 
