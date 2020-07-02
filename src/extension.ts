@@ -181,7 +181,8 @@ function verilog_comment() {
             paragraph = paragraph + line + "\n";
         }
         editor?.edit(builder => {
-            builder.insert(ln_st, paragraph);
+            let pos = new vscode.Position(ln_st.line, 0);
+            builder.insert(pos, paragraph);
         });
     });
 
