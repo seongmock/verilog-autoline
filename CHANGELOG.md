@@ -31,3 +31,7 @@ Emacs verilog-mode function Added
 ## 1.0.0
 
 - Version Stamp
+
+## 1.1.0
+
+- Bug Fix
