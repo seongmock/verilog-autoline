@@ -54,3 +54,7 @@ Emacs verilog-mode function Added
 ## 0.4.0
 
 - Add MultiLine Comment Divider Command
+
+## 1.0.0
+
+- Version Stamp
